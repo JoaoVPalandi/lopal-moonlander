@@ -10,21 +10,31 @@
 let canvas = document.querySelector("#jogo");
 let contexto = canvas.getContext("2d");
  
+let lancacamentoPelaEsquerda = (Math.round(Math.random()) == 0);
  
-let lancamentoPelaEsquerda = (Math.round(Math.random()) == 0);
+if( Math.round(Math.random()) == 0){
+    x = 100;
+    velocidadeX = 2;
+    angulo = -Math.PI/2;
+} else{
+    x = 700;
+    velocidadeX = -2;
+    angulo = Math.PI/2;
+};
+ 
  
 let moduloLunar = {
     posicao: {
-        x: lancamentoPelaEsquerda ? 100 :700,
+        x: lancacamentoPelaEsquerda? 100 :700,
         y: 100
     },
-    angulo: lancamentoPelaEsquerda ? -Math>PI/2 : Math.PI/2,
-    largura: 20, 
+    angulo: lancacamentoPelaEsquerda ? -Math.PI/2 : -Math.PI/2 ,
+    largura: 20,
     altura: 20,
     cor: "lightgray",
     motorLigado: false,
     velocidade: {
-        x: lancamentoPelaEsquerda ? 2 : -2,
+        x: lancacamentoPelaEsquerda ? 2 : -2,
         y: 0
     },
     combustivel: 1000,
@@ -77,58 +87,58 @@ function desenharChama(){
     contexto.fillStyle = "orange";
     contexto.fill();
 }
- 
-function mostrarAngulo(){
-    contexto.font = "bold 18px Arial";
-    contexto.textAlign = "left";
-    contexto.textBaseLine = "middle";
-    contexto.fillStyle = "lightgray";
-    let angulo = `Ângulo: ${(moduloLunar.angulo * 180 / Math.PI).toFixed(0)}°`;
-    contexto.fillText(angulo, 400, 40);
-}
- 
 function mostrarAltitude(){
-    mostrarIndicador(
+    mostrarIdicador(
         mensagem = `Altitude: ${(canvas.height - moduloLunar.posicao.y -
-        0.5 * moduloLunar.altura).toFixed(0)}`,
-        x = 400,
-        y = 60
-    );
+                                    0.5 * moduloLunar.altura).toFixed(0)}`,
+            x = 400,
+            y = 60
+ 
+    )
+   
+ 
 }
  
 function mostrarAngulo(){
-    mostrarIndicador(
-        `Ângulo: ${(moduloLunar.angulo * 180 / Math.PI).toFixed(0)}°`,
-        x = 400,
-        y = 40
-
-    );
+    mostrarIdicador(
+        mensagem =`Ângulo: ${(moduloLunar.angulo * 180 / Math.PI).toFixed(0)}°`,
+    x = 400,
+    y = 40
+);
+ 
 }
- 
- 
 function mostrarVelocidadeHorizontal(){
-    mostrarIndicador(
-        mensagem =`Velocidade Horizontal: ${(10 * moduloLunar.velocidade.x).toFixed(2)}`,
+    mostrarIdicador(
+        mensagem = `Velocidade Horizontal: ${(10 * moduloLunar.velocidade.x).toFixed(2)}`,
         x = 50,
         y = 40
-
-    );
+ 
+     )
 }
  
 function mostrarVelocidadeVertical(){
-    mostrarIndicador(
+    mostrarIdicador(
         mensagem = `Velocidade Vertical: ${(10 * moduloLunar.velocidade.y).toFixed(2)}`,
         x = 50,
-        y = 60
-    );
+        y = 60  
+ 
+    )
 }
  
 function mostrarCombustivel(){
-   mostrarIndicador(
+    mostrarIdicador(
         mensagem = `Combustível: ${(moduloLunar.combustivel / 10).toFixed(0)} %`,
         x = 50,
         y = 80
-   );
+    )
+}
+function mostrarIdicador(mensagem, x, y){
+        contexto.font = "bold 18px Arial";
+        contexto.textAlign = "left";
+        contexto.textBaseLine = "middle";
+        contexto.fillStyle = "lightgray";
+        contexto.fillText(mensagem, x, y);
+ 
 }
  
 function desenharEstrelas(){
@@ -169,6 +179,7 @@ function desenhar(){
     mostrarVelocidadeHorizontal();
     mostrarVelocidadeVertical();
     mostrarCombustivel();
+ 
    
    
     //Esta função repete a execução da função desenhar a cada quadro
@@ -179,9 +190,9 @@ function desenhar(){
             5 < Math.abs(moduloLunar.angulo)
         )
         {
-            return mostrarResultado("Você impactou o solo!", cor = "red");
+            return mostrarResultado("VOCÊ IMPACTOU O SOLO!", cor = "red");
         }else{
-            return mostrarResultado("Você pousou com sucesso!", cor = "green");
+            return mostrarResultado("VOCÊ POUSOU COM SUCESSO!", cor = "green");
         }
     }
    
@@ -194,14 +205,6 @@ function mostrarResultado(mensagem, cor){
     contexto.textBaseline = "middle";
     contexto.fillStyle = cor;
     contexto.fillText(mensagem, canvas.width/2, canvas.height/2);
-}
-
-function mostrarIndicador(mensagem, x, y){
-    contexto.font = "bold 18px Arial";
-    contexto.textAlign = "left";
-    contexto.textBaseLine = "middle";
-    contexto.fillStyle = "lightgray";
-    contexto.fillText(mensagem, x, y);
 }
  
 //Seção de controle
