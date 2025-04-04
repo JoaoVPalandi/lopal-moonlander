@@ -2,7 +2,7 @@
 // João Vitor Palandi
 //https://github.com/JoaoVPalandi
 // 28/03/2025
-// Versão 0.1
+// Versão 1.0
 
 /** @type {HTMLCanvasElement} */
  
@@ -257,7 +257,5 @@ function atracaoGravitacional(){
         moduloLunar.velocidade.x += 0.0115 * Math.sin(moduloLunar.angulo);
     }
     moduloLunar.velocidade.y += gravidade;
-   
-   
 }
 desenhar();
